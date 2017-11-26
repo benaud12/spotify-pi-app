@@ -13,11 +13,11 @@ COPY package.json /usr/src/spotify-app
 # Install dependecies
 RUN npm install
 
-# Copy over application code
-COPY dist /usr/src/spotify-app/dist
-
 # Expose the port the app runs in
 EXPOSE 80
+
+# Copy over application code
+COPY dist /usr/src/spotify-app/dist
 
 # Start express server
 CMD ["node", "dist/server.js"]

@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let item of items">
+    <h4>{{ item.name }}</h4>
+    <img class="item-image" alt="{{ item.name }} playlist image" [src]="getImageUrl(item.images, 300)">
+  </li>
+</ul>

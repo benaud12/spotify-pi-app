@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SpotifyClientService } from './services/spotify-client.service';
+import { SpotifyPlaylist, SpotifyPlaylistSeachResponse } from './services/spotify-client.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { SpotifyClientService } from './services/spotify-client.service';
 export class AppComponent {
   public title = `Mick's Spotty`;
   public authResponse: any;
-  public playlistResponse: any;
+  public playlistResponse: SpotifyPlaylistSeachResponse;
+  public playlists: SpotifyPlaylist[];
   public searchKeywords: string;
 
   constructor(private spotify: SpotifyClientService) {}
@@ -21,8 +23,10 @@ export class AppComponent {
   }
 
   public searchPlaylists(query: string): void {
-    this.spotify.searchPlaylists(query).subscribe(response => {
-      this.playlistResponse = response;
-    });
+    this.spotify.searchPlaylists(query)
+      .subscribe((response: SpotifyPlaylistSeachResponse) => {
+        this.playlistResponse = response;
+        this.playlists = response.playlists.items;
+      });
   }
 }

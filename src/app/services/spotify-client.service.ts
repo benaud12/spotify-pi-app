@@ -4,6 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import {
+  SpotifyPlaylistSeachResponse,
+  SpotifyAuthenticationResponse
+} from './spotify-client.interfaces';
 
 @Injectable()
 export class SpotifyClientService {
@@ -12,22 +16,28 @@ export class SpotifyClientService {
 
   constructor(private http: HttpClient) {}
 
-  public authenticateClient(): Observable<any> {
-    return this.http.get(`${this.clientUrl}/api/authenticate/client`)
-      .pipe(
-        tap(response => console.log(`Auth response: ${response}`)),
-        catchError(this.handleError('authenticateClient', []))
-      )
-  }
+  public authenticateClient():
+    Observable<SpotifyAuthenticationResponse | any[]> {
+      return this.http
+        .get<SpotifyAuthenticationResponse>(
+          `${this.clientUrl}/api/authenticate/client`)
+        .pipe(
+          tap(response => console.log(`Auth response: ${response}`)),
+          catchError(this.handleError('authenticateClient', []))
+        )
+    }
 
-  public searchPlaylists(query: string): Observable<any> {
-    const queryString = query ? `q=${encodeURI(query)}` : '';
-    return this.http.get(`${this.clientUrl}/api/search/playlist`)
-      .pipe(
-        tap(response => console.log(`Playlist search response: ${response}`)),
-        catchError(this.handleError('searchPlaylists', []))
-      )
-  }
+  public searchPlaylists(query: string):
+    Observable<SpotifyPlaylistSeachResponse | any[]> {
+      const queryString = query ? `?q=${encodeURI(query)}` : '';
+      return this.http
+        .get<SpotifyPlaylistSeachResponse>(
+          `${this.clientUrl}/api/search/playlist${queryString}`)
+        .pipe(
+          tap(response => console.log(`Playlist search response: ${response}`)),
+          catchError(this.handleError('searchPlaylists', []))
+        )
+    }
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

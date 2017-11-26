@@ -19,5 +19,5 @@
          id="keywords">
   <button (click)="searchPlaylists(searchKeywords)">Search</button>
 </form>
-<h3>Playlist response</h3>
-<textarea>{{ playlistResponse }}</textarea>
+<h3>Playlist results</h3>
+<app-playlist-list [items]="playlists"></app-playlist-list>
