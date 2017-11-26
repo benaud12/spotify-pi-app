@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SpotifyClientService {
 
-  private clientUrl: string = 'http://192.168.1.108:3000';
+  private clientUrl: string = environment.spotifyApiUrl;
 
   constructor(private http: HttpClient) {}
 

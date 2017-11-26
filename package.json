@@ -9,6 +9,10 @@
     "build:client": "ng build -prod --build-optimizer --app 0",
     "build:aot": "ng build --aot --app 1",
     "build:server": "webpack -p",
+    "sync-pi": "run-s sync-pi:dist sync-pi:docker sync-pi:package",
+    "sync-pi:dist": "rsync -r dist my-pi:/usr/src/spotify-angular-app",
+    "sync-pi:docker": "rsync Dockerfile my-pi:/usr/src/spotify-angular-app",
+    "sync-pi:package": "rsync package.json my-pi:/usr/src/spotify-angular-app",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
